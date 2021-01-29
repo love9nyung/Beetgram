@@ -42,7 +42,7 @@ export const likeApi = (dataImgNo, like, setLike) => {
     });
 };
 
-export const HomeApi = (tags, dispatch, setData1, setLoading) => {
+export const HomeApi = (tags1, dispatch, setData1, setLoading, Tagged) => {
   console.log(111);
   //   const tag1 = {
   //     aaa: 333,
@@ -54,9 +54,9 @@ export const HomeApi = (tags, dispatch, setData1, setLoading) => {
   //     type: "ADD_SEARCH",
   //     tag: tag1,
   //   });
-
+  const tags = Tagged;
   api.post("home", { tags }).then((res) => {
-    if (res.data.tag_list) tags = res.data.tag_list;
+    if (res.data.tag_list) tags1 = res.data.tag_list;
     const data1 = res.data.img_info;
     console.log(res.data);
     console.log(111222);

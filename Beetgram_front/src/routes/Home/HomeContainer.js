@@ -8,11 +8,15 @@ import { HomeApi } from "../../api";
 const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
   const [data1, setData1] = useState();
-  const { dispatch, tags } = useContext(tagDispatch);
+  const { dispatch, tags, Tagged } = useContext(tagDispatch);
+  console.log(Tagged);
+  console.log(tags);
   useEffect(() => {
-    HomeApi(tags, dispatch, setData1, setLoading);
+    HomeApi(tags, dispatch, setData1, setLoading, Tagged);
     return () => {
       tags.length = 0;
+      Tagged.legth = 0;
+      console.log(tags);
     };
   }, [tags]);
   try {

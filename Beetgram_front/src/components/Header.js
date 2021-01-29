@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { BiSearchAlt } from "react-icons/bi";
@@ -6,6 +6,7 @@ import { FcGlobe } from "react-icons/fc";
 import { GiBeet } from "react-icons/gi";
 import { IoLogOutOutline } from "react-icons/io5";
 import TagList from "./Tag";
+import { tagDispatch } from "./App";
 
 const Search = styled.div`
   object-fit: cover;
@@ -61,6 +62,7 @@ const StyledLink = styled(Link)`
 // 어떠한 라우터로 이동하는지 알아야 하기 때문에 withRouter를 사용해야 한다.
 
 export default withRouter(({ location: { pathname } }) => {
+  const { tags } = useContext(tagDispatch);
   const serTab = () => {
     if (pathname === "/public" || pathname === "/public/") {
       return { pathname: "/public/search" };
@@ -107,7 +109,7 @@ export default withRouter(({ location: { pathname } }) => {
         </Header>
         {pathname.includes("search") && (
           <Search>
-            <TagList />
+            <TagList tags={tags} />
           </Search>
         )}
       </>

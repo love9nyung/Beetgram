@@ -4,6 +4,7 @@ import { createContext, useMemo, useReducer } from "react";
 
 const initialStateTags = {
   tags: [],
+  Tagged: [],
 };
 
 function reducer(state, action) {
@@ -12,6 +13,7 @@ function reducer(state, action) {
       return {
         //tags: state.tags.concat(action.tag),
         tags: action.tag,
+        Tagged: action.tag.map((i) => i.active && state.Tagged.push(i.tag_no)),
       };
     case "DEL_SEARCH":
       return {
@@ -36,8 +38,13 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialStateTags);
 
   const { tags } = state;
+  const { Tagged } = state;
 
-  const value = useMemo(() => ({ dispatch, tags }), [dispatch, tags]);
+  const value = useMemo(() => ({ dispatch, tags, Tagged }), [
+    dispatch,
+    tags,
+    Tagged,
+  ]);
   return (
     <tagDispatch.Provider value={value}>
       <GlobalStyles />
