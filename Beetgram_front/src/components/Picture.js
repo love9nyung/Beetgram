@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import Overlay from "react-overlay-component";
-import axios from "axios";
-import { API_BASE_URL } from "..";
 import { GiBeet } from "react-icons/gi";
+import { DetailApi, likeApi } from "../api";
 const Container = styled.div`
   font-size: 12px;
 `;
@@ -47,7 +46,7 @@ const DetailHeader = styled.div`
 `;
 
 const Thum = styled.img`
-  background-image: url("${({ thumUrl }) => thumUrl}");
+  background-image: url("${({ bgUrl }) => bgUrl}");
 
   background-size: cover;
   height: 60px;
@@ -78,35 +77,23 @@ const Item = styled.li`
 const Picture = ({ img_no, imageUrl, reg_date = false }) => {
   const [isOpen, setOverlay] = useState(false);
   const closeOverlay = () => setOverlay(false);
-  const [UrlImg, setUrl] = useState();
+  const [urlImg, setUrl] = useState();
   const [imgUser, setUser] = useState();
-  const [Like, setLike] = useState();
-  const [imgNo, setImgno] = useState();
+  const [like, setLike] = useState();
+  const [thumbUrl, setThumb] = useState();
 
-  const onClickLike = (img_no) => {
-    axios
-      .get(API_BASE_URL + "/like/" + img_no, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        if (res === 200) {
-          if (Like === 1) setLike(0);
-          else setLike(1);
-        }
-      });
+  //useCallback 사용
+  const onClickLike = (event) => {
+    if (like === 1) setLike(0);
+    else setLike(1);
+
+    const dataImgNo = event.target.parentNode.getAttribute("data-img-no");
+    console.log(dataImgNo);
+    if (dataImgNo) likeApi(dataImgNo, like, setLike);
   };
 
   const DetailImg = (img_no) => {
-    axios
-      .get(API_BASE_URL + "/home/detail/" + img_no, {
-        headers: { Authorization: localStorage.getItem("token") },
-      })
-      .then((res) => {
-        const data1 = res.data.img_info;
-        setUrl(data1.img_url);
-        setUser(data1.user_id);
-        setLike(res.data.like_or_unlike);
-      });
+    DetailApi(img_no, setUrl, setUser, setLike, setThumb);
   };
 
   const configs = {
@@ -121,8 +108,6 @@ const Picture = ({ img_no, imageUrl, reg_date = false }) => {
       onClick={() => {
         setOverlay(true);
         DetailImg(img_no);
-        setImgno(img_no);
-        console.log(imgNo);
       }}
     >
       <Overlay
@@ -134,19 +119,20 @@ const Picture = ({ img_no, imageUrl, reg_date = false }) => {
         <div>
           <DetailHeader>
             <div style={{ display: "flex" }}>
-              <Thum thumUrl={`${UrlImg}`} />
+              <Thum bgUrl={`${thumbUrl}`} />
               <List>
                 <Item>{imgUser}</Item>
                 <Item>{reg_date.slice(0, 17)}</Item>
               </List>
             </div>
             <GiBeet
-              //onClick={onClickLike(imgNo)}
-              color={Like ? "#F04F53" : "black"}
+              onClick={onClickLike}
+              color={like ? "#F04F53" : "black"}
               size="50px"
+              data-img-no={img_no}
             />
           </DetailHeader>
-          <ImageDetail bgUrl={`${UrlImg}`}></ImageDetail>
+          <ImageDetail bgUrl={`${urlImg}`}></ImageDetail>
         </div>
       </Overlay>
       <ImageContainer>

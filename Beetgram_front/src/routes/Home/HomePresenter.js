@@ -6,6 +6,7 @@ import Section from "../../components/Section";
 import Loader from "../../components/Loader";
 import Picture from "../../components/Picture";
 import axios from "axios";
+import { API_BASE_URL } from "../..";
 
 const Container = styled.div`
   padding: 20px;
@@ -19,9 +20,6 @@ const Menu = styled.div`
 // Presentor의 역할 : Container으로 부터 받은 각종 이벤트나 상태 등을 화면에 적용 시키는 역할
 
 const HomePresenter = ({ loading, data1 }) => {
-  console.log("1234");
-  console.log(data1);
-  // console.log(data1.map());
   const [img, setImage] = useState(null);
 
   const onChange = (e) => {
@@ -32,13 +30,18 @@ const HomePresenter = ({ loading, data1 }) => {
     const formData = new FormData();
     formData.append("file", img);
     // 서버의 upload API 호출
-    const res = await axios.post("/home/upload", formData);
-    console.log(res);
+    await axios.post(
+      API_BASE_URL + "/home/upload",
+      {
+        upload_image: formData,
+      },
+      { headers: { Authorization: localStorage.getItem("token") } }
+    );
   };
   return (
     <>
       <Helmet>
-        <title>Movies | Bitflix</title>
+        <title>Beetgram</title>
       </Helmet>
       {loading ? (
         <Loader />
@@ -62,6 +65,7 @@ const HomePresenter = ({ loading, data1 }) => {
                   (i) =>
                     i.thum_url && (
                       <Picture
+                        key={i.img_no}
                         reg_date={i.reg_date}
                         imageUrl={i.thum_url}
                         img_no={i.img_no}

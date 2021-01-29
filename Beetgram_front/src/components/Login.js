@@ -1,14 +1,12 @@
-import axios from "axios";
 import React, { useState } from "react";
-import { GiHandheldFan } from "react-icons/gi";
 import { Link, useHistory } from "react-router-dom";
-import { login } from "../api";
-import { ACCESS_TOKEN, API_BASE_URL, baseURL } from "../index";
+import { LoginApi } from "../api";
 
 const Login = () => {
   const [userId, setUserId] = useState("");
   const [userPw, setUserPw] = useState("");
   const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId || !userPw) {
@@ -19,17 +17,7 @@ const Login = () => {
         user_id: userId,
         user_pw: userPw,
       };
-
-      axios.post(API_BASE_URL + "/login", data).then((res) => {
-        console.log(res);
-        const { access_token } = res.data;
-        const status = res.status;
-        localStorage.setItem("token", access_token);
-        localStorage.setItem("status", status);
-
-        console.log(localStorage.getItem("token"));
-        history.replace("/home");
-      });
+      LoginApi(data, history);
     } catch (err) {
       alert("로그인에 실패했습니다.");
       setUserId("");

@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { BiSearchAlt } from "react-icons/bi";
 import { FcGlobe } from "react-icons/fc";
 import { GiBeet } from "react-icons/gi";
-
 import { IoLogOutOutline } from "react-icons/io5";
+import TagList from "./Tag";
 
 const Search = styled.div`
+  object-fit: cover;
   display: grid;
   position: fixed;
   grid-template-columns: repeat(auto-fill, 20vw);
@@ -61,13 +62,13 @@ const StyledLink = styled(Link)`
 
 export default withRouter(({ location: { pathname } }) => {
   const serTab = () => {
-    if (pathname === "/public") {
+    if (pathname === "/public" || pathname === "/public/") {
       return { pathname: "/public/search" };
     } else if (pathname === "/public/search") {
       return { pathname: "/public" };
     } else if (pathname === "/home/search") {
       return { pathname: "/home" };
-    } else if (pathname === "/home") {
+    } else if (pathname === "/home" || pathname === "/home/") {
       return { pathname: "/home/search" };
     }
   };
@@ -104,7 +105,11 @@ export default withRouter(({ location: { pathname } }) => {
             </Item>
           </List>
         </Header>
-        {pathname.includes("search") && <Search />}
+        {pathname.includes("search") && (
+          <Search>
+            <TagList />
+          </Search>
+        )}
       </>
     );
 });
