@@ -29,12 +29,14 @@ const HomePresenter = ({ loading, data1 }) => {
   const onClick = async () => {
     const formData = new FormData();
     formData.append("file", img);
+    console.log(formData);
     // 서버의 upload API 호출
     await axios.post(
       API_BASE_URL + "/home/upload",
-      {
-        upload_image: formData,
-      },
+      formData,
+      // {
+      //   upload_image: formData,
+      // },
       { headers: { Authorization: localStorage.getItem("token") } }
     );
   };

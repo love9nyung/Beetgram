@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Overlay from "react-overlay-component";
 import { GiBeet } from "react-icons/gi";
 import { DetailApi, likeApi } from "../api";
+import { useLocation } from "react-router-dom";
 const Container = styled.div`
   font-size: 12px;
 `;
@@ -75,25 +76,28 @@ const Item = styled.li`
 `;
 
 const Picture = ({ img_no, imageUrl, reg_date = false }) => {
+  const pathname = useLocation().pathname;
   const [isOpen, setOverlay] = useState(false);
   const closeOverlay = () => setOverlay(false);
   const [urlImg, setUrl] = useState();
   const [imgUser, setUser] = useState();
   const [like, setLike] = useState();
   const [thumbUrl, setThumb] = useState();
-
+  const [serType, setType] = useState();
+  if (pathname.includes("search")) setType("S");
+  else if (pathname === "/public" || pathname === "/public/") setType("R");
+  else setType("S");
   //useCallback 사용
   const onClickLike = (event) => {
     if (like === 1) setLike(0);
     else setLike(1);
 
     const dataImgNo = event.target.parentNode.getAttribute("data-img-no");
-    console.log(dataImgNo);
     if (dataImgNo) likeApi(dataImgNo, like, setLike);
   };
 
   const DetailImg = (img_no) => {
-    DetailApi(img_no, setUrl, setUser, setLike, setThumb);
+    DetailApi(img_no, setUrl, setUser, setLike, setThumb, serType);
   };
 
   const configs = {

@@ -8,18 +8,18 @@ import { PubApi } from "../../api";
 const PublicContainer = () => {
   const [loading, setLoading] = useState(true);
   const [data1, setData1] = useState();
-  const { dispatch, tags } = useContext(tagDispatch);
+  const { dispatch, tags, Tagged } = useContext(tagDispatch);
   useEffect(() => {
-    PubApi(tags, dispatch, setData1, setLoading);
+    PubApi(dispatch, setData1, setLoading, Tagged);
     return () => {
       tags.length = 0;
+      Tagged.legth = 0;
     };
-  }, [tags]);
+  }, [Tagged]);
   try {
   } catch (error) {
     console.log(error);
   }
-
   return (
     <>
       <PublicPresenter loading={loading} data1={data1}></PublicPresenter>

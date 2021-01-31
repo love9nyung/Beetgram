@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://6b080d8094fc.ngrok.io/",
+  baseURL: "http://a613cb555953.ngrok.io/",
   headers: { Authorization: localStorage.getItem("token") },
 });
 
@@ -17,8 +17,15 @@ export const LoginApi = (data, history) => {
   });
 };
 
-export const DetailApi = (img_no1, setUrl, setUser, setLike, setThumb) => {
-  api.post("home/detail", { img_no: img_no1, type: "S" }).then((res) => {
+export const DetailApi = (
+  img_no1,
+  setUrl,
+  setUser,
+  setLike,
+  setThumb,
+  serType
+) => {
+  api.post("home/detail", { img_no: img_no1, type: "serType" }).then((res) => {
     const data1 = res.data.img_info;
     console.log(data1);
     setUrl(data1.img_url);
@@ -42,59 +49,35 @@ export const likeApi = (dataImgNo, like, setLike) => {
     });
 };
 
-export const HomeApi = (tags1, dispatch, setData1, setLoading, Tagged) => {
-  console.log(111);
-  //   const tag1 = {
-  //     aaa: 333,
-  //     bbb: 222,
-  //     ccc: 111,
-  //   };
-
-  //   dispatch({
-  //     type: "ADD_SEARCH",
-  //     tag: tag1,
-  //   });
+export const HomeApi = (dispatch, setData1, setLoading, Tagged) => {
   const tags = Tagged;
   api.post("home", { tags }).then((res) => {
-    if (res.data.tag_list) tags1 = res.data.tag_list;
     const data1 = res.data.img_info;
-    console.log(res.data);
-    console.log(111222);
     dispatch({
       type: "ADD_SEARCH",
       tag: res.data.tag_list,
     });
-    console.log(dispatch);
     setData1(data1);
     setLoading(false);
   });
 };
 
-export const PubApi = (tags, dispatch, setData1, setLoading) => {
+export const PubApi = (dispatch, setData1, setLoading, Tagged) => {
+  const tags = Tagged;
   api.post("public", { tags }).then((res) => {
-    if (res.data.tag_list) tags = res.data.tag_list;
     const data1 = res.data.img_info;
-    console.log(res.data);
-    console.log(111222);
     dispatch({
       type: "ADD_SEARCH",
       tag: res.data.tag_list,
     });
-    console.log(dispatch);
     setData1(data1);
     setLoading(false);
   });
 };
 
-export const LikePageApi = (tags, dispatch, setData1, setLoading) => {
+export const LikePageApi = (setData1, setLoading) => {
   api.get("likeimage").then((res) => {
-    if (res.data.tag_list) tags = res.data.tag_list;
     const data1 = res.data.img_info;
-    dispatch({
-      type: "ADD_SEARCH",
-      tag: res.data.tag_list,
-    });
-    console.log(dispatch);
     setData1(data1);
     setLoading(false);
   });

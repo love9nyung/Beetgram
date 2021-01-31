@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import LikePresenter from "./LikePresenter";
-import { tagDispatch } from "../../components/App";
 import { LikePageApi } from "../../api";
 
 // Container의 역할 : Application에서 사용되어지는 기능(함수), 상태(state), 이벤트 등을
@@ -8,13 +7,9 @@ import { LikePageApi } from "../../api";
 const LikeContainer = () => {
   const [loading, setLoading] = useState(true);
   const [data1, setData1] = useState();
-  const { dispatch, tags } = useContext(tagDispatch);
   useEffect(() => {
-    LikePageApi(tags, dispatch, setData1, setLoading);
-    return () => {
-      tags.length = 0;
-    };
-  }, [tags]);
+    LikePageApi(setData1, setLoading);
+  }, []);
   try {
   } catch (error) {
     console.log(error);
