@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://a613cb555953.ngrok.io/",
+  baseURL: "http://2bfcf6de6c88.ngrok.io/",
   headers: { Authorization: localStorage.getItem("token") },
 });
 
@@ -12,7 +12,7 @@ export const LoginApi = (data, history) => {
     console.log(1);
     console.log(access_token);
     console.log(res.data);
-    localStorage.setItem("token", { access_token });
+    localStorage.setItem("token", access_token);
     history.replace("/home");
   });
 };
@@ -50,6 +50,7 @@ export const likeApi = (dataImgNo, like, setLike) => {
 };
 
 export const HomeApi = (dispatch, setData1, setLoading, Tagged) => {
+  console.log("HomeApi");
   const tags = Tagged;
   api.post("home", { tags }).then((res) => {
     const data1 = res.data.img_info;

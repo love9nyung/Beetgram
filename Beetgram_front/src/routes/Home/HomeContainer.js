@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useCallback } from "react";
 import HomePresenter from "./HomePresenter";
 import { tagDispatch } from "../../components/App";
 import { HomeApi } from "../../api";
@@ -9,14 +9,18 @@ const HomeContainer = () => {
   const [loading, setLoading] = useState(true);
   const [data1, setData1] = useState();
   const { dispatch, tags, Tagged } = useContext(tagDispatch);
-
+  console.log("HomeContainer");
+  const start = useCallback(
+    () => HomeApi(dispatch, setData1, setLoading, Tagged),
+    [Tagged]
+  );
   useEffect(() => {
-    HomeApi(dispatch, setData1, setLoading, Tagged);
+    start();
     return () => {
       tags.length = 0;
-      Tagged.legth = 0;
+      Tagged.length = 0;
     };
-  }, [Tagged]);
+  }, [HomeApi, tags, Tagged]);
   try {
   } catch (error) {
     console.log(error);

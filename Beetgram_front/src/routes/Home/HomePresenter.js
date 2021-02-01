@@ -21,7 +21,7 @@ const Menu = styled.div`
 
 const HomePresenter = ({ loading, data1 }) => {
   const [img, setImage] = useState(null);
-  console.log(data1);
+  console.log("HomePresenter");
   const onChange = (e) => {
     setImage(e.target.files[0]);
   };

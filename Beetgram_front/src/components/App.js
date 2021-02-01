@@ -10,10 +10,10 @@ const initialStateTags = {
 function reducer(state, action) {
   switch (action.type) {
     case "ADD_SEARCH":
-      console.log(action.tag);
+      console.log(1);
+      console.log(state.tags.concat(action.tag));
       return {
-        //tags: state.tags.concat(action.tag),
-        tags: action.tag,
+        tags: state.tags.concat(action.tag),
       };
     case "DEL_SEARCH":
       return {
@@ -35,10 +35,12 @@ function reducer(state, action) {
 export const tagDispatch = createContext(null);
 
 function App() {
+  console.log("App");
   const [state, dispatch] = useReducer(reducer, initialStateTags);
   const { tags, Tagged } = state;
+
   tags.map((i) => i.active === "true" && Tagged.push(i.tag_no));
-  console.log(Tagged);
+
   const value = useMemo(() => ({ dispatch, tags, Tagged }), [
     dispatch,
     tags,

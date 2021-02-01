@@ -62,6 +62,7 @@ const StyledLink = styled(Link)`
 // 어떠한 라우터로 이동하는지 알아야 하기 때문에 withRouter를 사용해야 한다.
 
 export default withRouter(({ location: { pathname } }) => {
+  console.log("Header");
   const { tags } = useContext(tagDispatch);
   const serTab = () => {
     if (pathname === "/public" || pathname === "/public/") {

@@ -13,7 +13,7 @@ const PublicContainer = () => {
     PubApi(dispatch, setData1, setLoading, Tagged);
     return () => {
       tags.length = 0;
-      Tagged.legth = 0;
+      Tagged.length = 0;
     };
   }, [Tagged]);
   try {

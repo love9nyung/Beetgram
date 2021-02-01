@@ -11,6 +11,7 @@ import Login from "./Login";
 // 오로지 라우터만 관리하는 컴포넌트가 될 것이다.
 
 const RouterB = () => {
+  console.log("Router");
   return (
     <Router>
       {/* {localStorage.getItem("status") === 200 ? (

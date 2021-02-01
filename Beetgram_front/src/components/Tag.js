@@ -21,6 +21,7 @@ const Tag = React.memo(function Tag({ tag }) {
 });
 
 function TagList({ tags }) {
+  console.log("Tag");
   return (
     <div>
       {tags.map((tag) => (
