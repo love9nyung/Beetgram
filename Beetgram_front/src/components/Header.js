@@ -6,7 +6,7 @@ import { FcGlobe } from "react-icons/fc";
 import { GiBeet } from "react-icons/gi";
 import { IoLogOutOutline } from "react-icons/io5";
 import TagList from "./Tag";
-import { tagDispatch } from "./App";
+import { tagDispatch, tagsDispatch } from "./App";
 
 const Search = styled.div`
   object-fit: cover;
@@ -63,7 +63,7 @@ const StyledLink = styled(Link)`
 
 export default withRouter(({ location: { pathname } }) => {
   console.log("Header");
-  const { tags } = useContext(tagDispatch);
+  const { tags } = useContext(tagsDispatch);
   const serTab = () => {
     if (pathname === "/public" || pathname === "/public/") {
       return { pathname: "/public/search" };

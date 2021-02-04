@@ -21,7 +21,7 @@ const Menu = styled.div`
 
 const HomePresenter = ({ loading, data1 }) => {
   const [img, setImage] = useState(null);
-  console.log("HomePresenter");
+  console.log(data1);
   const onChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -62,7 +62,8 @@ const HomePresenter = ({ loading, data1 }) => {
           </Menu>
           <Container>
             {data1 && data1.length > 0 && (
-              <Section title="현재 상영작">
+              <Section title="사진">
+                {console.log(222333)}
                 {data1.map(
                   (i) =>
                     i.thum_url && (

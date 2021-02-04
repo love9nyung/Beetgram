@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { tagDispatch } from "./App";
+import { tagDispatch, tagsDispatch } from "./App";
 
 const Tag = React.memo(function Tag({ tag }) {
-  const dispatch = useContext(tagDispatch);
+  const dispatch = useContext(tagsDispatch);
   return (
     <div>
       <b

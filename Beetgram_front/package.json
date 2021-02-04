@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.4.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
+    "@types/antd": "^1.0.0",
+    "antd": "^4.12.1",
     "apollo-boost": "^0.4.9",
     "axios": "^0.21.1",
     "graphql": "^15.4.0",

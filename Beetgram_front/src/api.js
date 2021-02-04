@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://2bfcf6de6c88.ngrok.io/",
+  baseURL: "http://8a62cb6502e8.ngrok.io/",
   headers: { Authorization: localStorage.getItem("token") },
 });
 
@@ -16,6 +16,9 @@ export const LoginApi = (data, history) => {
     history.replace("/home");
   });
 };
+export const signupApi = (data) => {
+  api.post("sign-up", data);
+};
 
 export const DetailApi = (
   img_no1,
@@ -25,7 +28,7 @@ export const DetailApi = (
   setThumb,
   serType
 ) => {
-  api.post("home/detail", { img_no: img_no1, type: "serType" }).then((res) => {
+  api.post("home/detail", { img_no: img_no1, type: serType }).then((res) => {
     const data1 = res.data.img_info;
     console.log(data1);
     setUrl(data1.img_url);
@@ -49,18 +52,40 @@ export const likeApi = (dataImgNo, like, setLike) => {
     });
 };
 
-export const HomeApi = (dispatch, setData1, setLoading, Tagged) => {
+export const HomeApi = (dispatch, setData, Tagged) => {
   console.log("HomeApi");
   const tags = Tagged;
   api.post("home", { tags }).then((res) => {
+    const loading = false;
     const data1 = res.data.img_info;
+    console.log(data1);
+    console.log(res.data.tag_list);
     dispatch({
       type: "ADD_SEARCH",
       tag: res.data.tag_list,
     });
-    setData1(data1);
-    setLoading(false);
+    setData(loading, data1);
   });
+};
+
+export const HomeApi1 = (dispatch, Tagged) => {
+  console.log("HomeApi");
+  const tags = Tagged;
+  if (tags === []) {
+    api.post("home", { tags }).then((res) => {
+      localStorage.setItem("data1", JSON.stringify(res.data.img_info));
+
+      dispatch({
+        type: "ADD_SEARCH",
+        tag: res.data.tag_list,
+        tagT: [],
+      });
+    });
+  } else {
+    api.post("home", { tags }).then((res) => {
+      localStorage.setItem("data1", JSON.stringify(res.data.img_info));
+    });
+  }
 };
 
 export const PubApi = (dispatch, setData1, setLoading, Tagged) => {

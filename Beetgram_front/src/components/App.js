@@ -3,17 +3,16 @@ import Router from "./Router";
 import { createContext, useMemo, useReducer } from "react";
 
 const initialStateTags = {
-  tags: [],
-  Tagged: [],
+  tags: [], // Home 접속시 사진에 포함된 모든 태그 정보
+  Tagged: [], // 검색하고 싶은 태그의 tag_no 리스트
 };
-
-function reducer(state, action) {
+function tagReducer(state, action) {
   switch (action.type) {
     case "ADD_SEARCH":
-      console.log(1);
-      console.log(state.tags.concat(action.tag));
       return {
-        tags: state.tags.concat(action.tag),
+        //tags: state.tags.concat(action.tag),
+        tags: action.tag,
+        Tagged: action.tagT,
       };
     case "DEL_SEARCH":
       return {
@@ -32,25 +31,23 @@ function reducer(state, action) {
   }
 }
 
-export const tagDispatch = createContext(null);
+export const tagsDispatch = createContext(null);
 
 function App() {
   console.log("App");
-  const [state, dispatch] = useReducer(reducer, initialStateTags);
+  const [state, dispatch] = useReducer(tagReducer, initialStateTags);
   const { tags, Tagged } = state;
-
-  tags.map((i) => i.active === "true" && Tagged.push(i.tag_no));
-
   const value = useMemo(() => ({ dispatch, tags, Tagged }), [
     dispatch,
     tags,
     Tagged,
   ]);
+
   return (
-    <tagDispatch.Provider value={value}>
+    <tagsDispatch.Provider value={value}>
       <GlobalStyles />
       <Router />
-    </tagDispatch.Provider>
+    </tagsDispatch.Provider>
   );
 }
 
