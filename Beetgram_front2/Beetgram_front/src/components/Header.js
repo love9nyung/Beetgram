@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import styled from "styled-components";
 import { BiSearchAlt } from "react-icons/bi";
 import { FcGlobe } from "react-icons/fc";
 import { GiBeet } from "react-icons/gi";
+
 import { IoLogOutOutline } from "react-icons/io5";
-import TagList from "./Tag";
-import contactContext from "../context/contact/contactContext";
 
 const Search = styled.div`
-  object-fit: cover;
   display: grid;
   position: fixed;
   grid-template-columns: repeat(auto-fill, 20vw);
@@ -62,19 +60,14 @@ const StyledLink = styled(Link)`
 // 어떠한 라우터로 이동하는지 알아야 하기 때문에 withRouter를 사용해야 한다.
 
 export default withRouter(({ location: { pathname } }) => {
-  console.log("Header");
-  const ContactContext = useContext(contactContext);
-
-  const { base_data } = ContactContext;
-
   const serTab = () => {
-    if (pathname === "/public" || pathname === "/public/") {
+    if (pathname === "/public") {
       return { pathname: "/public/search" };
     } else if (pathname === "/public/search") {
       return { pathname: "/public" };
     } else if (pathname === "/home/search") {
       return { pathname: "/home" };
-    } else if (pathname === "/home" || pathname === "/home/") {
+    } else if (pathname === "/home") {
       return { pathname: "/home/search" };
     }
   };
@@ -111,11 +104,7 @@ export default withRouter(({ location: { pathname } }) => {
             </Item>
           </List>
         </Header>
-        {pathname.includes("search") && (
-          <Search>
-            <TagList tags={base_data.tag_list} />
-          </Search>
-        )}
+        {pathname.includes("search") && <Search />}
       </>
     );
 });

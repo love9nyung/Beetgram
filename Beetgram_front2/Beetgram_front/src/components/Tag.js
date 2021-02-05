@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import contactContext from "../context/contact/contactContext";
+import React, { useContext, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { API_BASE_URL } from "../index";
+import { tagDispatch } from "./App";
 
 const Tag = React.memo(function Tag({ tag }) {
-  const ContactContext = useContext(contactContext);
-  const { toggleTagged } = ContactContext;
+  const dispatch = useContext(tagDispatch);
   return (
     <div>
       <b
@@ -12,7 +13,7 @@ const Tag = React.memo(function Tag({ tag }) {
           color: tag.active ? "green" : "black",
         }}
         onClick={() => {
-          toggleTagged(tag.tag_no);
+          dispatch({ type: "TAGGED", tag_no: tag.tag_no });
         }}
       >
         {tag.tag_han}
@@ -22,7 +23,6 @@ const Tag = React.memo(function Tag({ tag }) {
 });
 
 function TagList({ tags }) {
-  console.log("Tag");
   return (
     <div>
       {tags.map((tag) => (

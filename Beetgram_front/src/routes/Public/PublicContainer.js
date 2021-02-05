@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import PublicPresenter from "./PublicPresenter";
-import { tagDispatch, tagsDispatch } from "../../components/App";
 import { PubApi } from "../../api";
 
 // Container의 역할 : Application에서 사용되어지는 기능(함수), 상태(state), 이벤트 등을
@@ -8,13 +7,9 @@ import { PubApi } from "../../api";
 const PublicContainer = () => {
   const [loading, setLoading] = useState(true);
   const [data1, setData1] = useState();
-  const { dispatch, tags, Tagged } = useContext(tagsDispatch);
   useEffect(() => {
-    PubApi(dispatch, setData1, setLoading, Tagged);
-    return () => {
-      tags.length = 0;
-      Tagged.length = 0;
-    };
+    PubApi(setData1, setLoading);
+    return () => {};
   }, []);
   try {
   } catch (error) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://8a62cb6502e8.ngrok.io/",
+  baseURL: "http://3c395715755a.ngrok.io/",
   headers: { Authorization: localStorage.getItem("token") },
 });
 
@@ -67,7 +67,6 @@ export const HomeApi = (dispatch, setData, Tagged) => {
     setData(loading, data1);
   });
 };
-
 export const HomeApi1 = (dispatch, Tagged) => {
   console.log("HomeApi");
   const tags = Tagged;
